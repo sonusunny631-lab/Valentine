@@ -1,170 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Valentine 💙💗</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Valentine 💙💗</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #0b3c5d, #020c1b);
+            overflow: hidden;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-<style>
-body {
-  margin: 0;
-  height: 100vh;
-  font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at top, #0b3c5d, #020c1b);
-  overflow: hidden;
-  color: white;
-}
+        /* Drifting Hearts Background */
+        .heart-bg {
+            position: fixed;
+            top: -10%;
+            color: rgba(255, 182, 193, 0.3);
+            font-size: 20px;
+            user-select: none;
+            z-index: -1;
+            animation: move linear infinite;
+        }
 
-.card {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255, 182, 193, 0.15);
-  border-radius: 20px;
-  padding: 30px;
-  width: 90%;
-  max-width: 360px;
-  text-align: center;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 30px rgba(255,105,180,0.4);
-}
+        @keyframes move {
+            0% { transform: translateY(0vh) translateX(0px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) translateX(50px) rotate(360deg); opacity: 0; }
+        }
 
-button {
-  border: none;
-  padding: 12px 24px;
-  font-size: 18px;
-  border-radius: 25px;
-  cursor: pointer;
-  margin-top: 20px;
-}
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            width: 85%;
+            max-width: 400px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(255,105,180,0.3);
+            z-index: 10;
+        }
 
-#yesBtn {
-  background: hotpink;
-  color: white;
-}
+        h2 { margin-bottom: 20px; font-weight: 600; line-height: 1.4; }
 
-#floatingNo {
-  position: absolute;
-  padding: 12px 20px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 20px;
-  backdrop-filter: blur(6px);
-  cursor: pointer;
-  transition: all 0.4s ease;
-}
+        button {
+            border: none;
+            padding: 15px 35px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
 
-.hidden {
-  display: none;
-}
+        #yesBtn {
+            background: #ff4d6d;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+        }
 
-.firework {
-  position: fixed;
-  width: 6px;
-  height: 6px;
-  background: gold;
-  border-radius: 50%;
-  animation: explode 1s infinite;
-}
+        #yesBtn:hover { transform: scale(1.1); }
 
-@keyframes explode {
-  from { transform: scale(1); opacity: 1; }
-  to { transform: scale(5); opacity: 0; }
-}
+        #floatingNo {
+            position: absolute;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            user-select: none;
+            z-index: 20;
+            border: 1px solid rgba(255,255,255,0.3);
+            font-weight: 400;
+        }
 
-.final {
-  overflow-y: auto;
-  max-height: 70vh;
-}
+        .final {
+            max-height: 80vh;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
 
-.final img {
-  width: 100%;
-  border-radius: 15px;
-  margin: 15px 0;
-}
-</style>
+        .final img {
+            width: 100%;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Scrollbar styling for the letter */
+        .final::-webkit-scrollbar { width: 5px; }
+        .final::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+        .firework {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            z-index: 100;
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(15); opacity: 0; }
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="card" id="card">
-  <h2>Will you be my Valentine? 💗</h2>
-  <button id="yesBtn">Yes 💞</button>
+    <div id="initialContent">
+        <h2>Will you be my Valentine, Metti? 💗</h2>
+        <button id="yesBtn">Yes 💞</button>
+    </div>
 </div>
 
 <div id="floatingNo">No 😏</div>
 
-<audio id="bgMusic" src="valentine/music.mp3"></audio>
+<audio id="bgMusic" src="music.mp3" loop></audio>
 
 <script>
-const noTexts = [
-  "Wait… are you sure? 😳",
-  "Really? 👀",
-  "Try again 😌",
-  "Are you sure mettiii? 🥺",
-  "Haha nice try 😈",
-  "No escape! 😎",
-  "Nice try 😂",
-  "Still no? Really? 😜",
-  "You’re testing my patience 😤",
-  "Nope. Not happening ❌"
-];
+    const noTexts = [
+        "Wait… are you sure? 😳",
+        "Really? 👀",
+        "Try again 😌",
+        "Are you sure mettiii? 🥺",
+        "Haha nice try 😈",
+        "No escape! 😎",
+        "Still no? 😜",
+        "You’re testing me! 😤",
+        "Nope. Not happening ❌"
+    ];
 
-let noIndex = 0;
-const floatingNo = document.getElementById("floatingNo");
+    let noIndex = 0;
+    const floatingNo = document.getElementById("floatingNo");
+    const card = document.getElementById("card");
 
-function moveNo() {
-  const x = Math.random() * (window.innerWidth - 150);
-  const y = Math.random() * (window.innerHeight - 80);
-  floatingNo.style.left = `${x}px`;
-  floatingNo.style.top = `${y}px`;
-  floatingNo.textContent = noTexts[noIndex];
-  noIndex++;
+    // Background Heart Effect
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart-bg";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+        heart.style.opacity = Math.random();
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 400);
 
-  if (noIndex >= noTexts.length) {
-    floatingNo.remove();
-    fireworks();
-  }
-}
+    // No Button Movement
+    function moveNo() {
+        const x = Math.random() * (window.innerWidth - 180);
+        const y = Math.random() * (window.innerHeight - 60);
+        floatingNo.style.left = `${x}px`;
+        floatingNo.style.top = `${y}px`;
+        floatingNo.textContent = noTexts[noIndex % noTexts.length];
+        noIndex++;
+    }
 
-floatingNo.addEventListener("click", moveNo);
-moveNo();
+    floatingNo.addEventListener("mouseover", moveNo);
+    floatingNo.addEventListener("click", moveNo);
+    moveNo(); // Initial random position
 
-function fireworks() {
-  for (let i = 0; i < 40; i++) {
-    const f = document.createElement("div");
-    f.className = "firework";
-    f.style.left = Math.random() * window.innerWidth + "px";
-    f.style.top = Math.random() * window.innerHeight + "px";
-    document.body.appendChild(f);
-    setTimeout(() => f.remove(), 1200);
-  }
-}
+    // Celebration Effect
+    function fireworks() {
+        for (let i = 0; i < 40; i++) {
+            const f = document.createElement("div");
+            f.className = "firework";
+            f.style.left = Math.random() * window.innerWidth + "px";
+            f.style.top = Math.random() * window.innerHeight + "px";
+            f.style.background = `hsl(${Math.random() * 360}, 100%, 60%)`;
+            document.body.appendChild(f);
+            setTimeout(() => f.remove(), 1000);
+        }
+    }
 
-document.getElementById("yesBtn").onclick = () => {
-  document.getElementById("bgMusic").play();
+    // Success Action
+    document.getElementById("yesBtn").onclick = () => {
+        const audio = document.getElementById("bgMusic");
+        audio.play().catch(err => console.log("Audio waiting for interaction"));
+        
+        floatingNo.style.display = "none";
+        fireworks();
 
-  document.getElementById("card").innerHTML = `
-  <div class="final">
-    <h2>💖 You make my heart smile 💖</h2>
-
-    <img src="valentine/image.jpg" alt="You make my heart smile">
-
-    <p>
-    <strong>I see you 👀✨</strong><br><br>
-    <strong>I choose you 💞</strong><br>
-    Today, tomorrow, always ♾️❤️
-    </p>
-
-    <p style="font-size:14px; line-height:1.6">
-    Hi Metti 💗<br><br>
-    I miss you a lot and I’m really sad that we can’t meet for your birthday or Valentine’s Day 💔
-    But nothing in this world can change the way I think about you...<br><br>
-
-    <!-- YOUR FULL LETTER IS HERE EXACTLY AS YOU SENT -->
-    </p>
-  </div>`;
-};
+        card.innerHTML = `
+        <div class="final">
+            <h2>💖 You make my heart smile 💖</h2>
+            <img src="image.jpg" alt="Our Memory">
+            <div style="text-align: left; font-size: 15px; line-height: 1.6;">
+                <p><strong>Hi Metti 💗</strong></p>
+                <p>I miss you a lot and I’m really sad that we can’t meet for your birthday or Valentine’s Day 💔 But nothing in this world can change the way I think about you...</p>
+                <p><strong>I see you 👀✨</strong><br>
+                <strong>I choose you 💞</strong><br>
+                Today, tomorrow, always ♾️❤️</p>
+                <p><i>(Your personal letter continues here...)</i></p>
+            </div>
+        </div>`;
+    };
 </script>
 
 </body>
