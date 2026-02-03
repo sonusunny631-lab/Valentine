@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Valentine 💙💗</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -16,9 +16,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            /* iPhone 14 Pro Dynamic Island / Notch Protection */
+            padding-top: env(safe-area-inset-top);
         }
 
-        /* Drifting Hearts Background */
         .heart-bg {
             position: fixed;
             top: -10%;
@@ -37,9 +38,9 @@
         .card {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            padding: 30px;
+            padding: 25px;
             width: 85%;
-            max-width: 400px;
+            max-width: 380px; /* Perfect for iPhone 14 Pro width */
             text-align: center;
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -47,7 +48,7 @@
             z-index: 10;
         }
 
-        h2 { margin-bottom: 20px; font-weight: 600; line-height: 1.4; }
+        h2 { margin-bottom: 20px; font-weight: 600; line-height: 1.4; font-size: 22px; }
 
         button {
             border: none;
@@ -60,13 +61,7 @@
             font-weight: 600;
         }
 
-        #yesBtn {
-            background: #ff4d6d;
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
-        }
-
-        #yesBtn:hover { transform: scale(1.1); }
+        #yesBtn { background: #ff4d6d; color: white; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4); }
 
         #floatingNo {
             position: absolute;
@@ -80,30 +75,30 @@
             user-select: none;
             z-index: 20;
             border: 1px solid rgba(255,255,255,0.3);
-            font-weight: 400;
         }
 
         .final {
-            max-height: 80vh;
+            max-height: 75vh;
             overflow-y: auto;
-            padding-right: 5px;
+            padding-right: 10px;
+            text-align: left;
         }
+
+        /* Improved Scrollbar for Mobile */
+        .final::-webkit-scrollbar { width: 4px; }
+        .final::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
 
         .final img {
             width: 100%;
             border-radius: 15px;
-            margin: 20px 0;
+            margin: 15px 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        /* Scrollbar styling for the letter */
-        .final::-webkit-scrollbar { width: 5px; }
-        .final::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
-
         .firework {
             position: fixed;
-            width: 5px;
-            height: 5px;
+            width: 4px;
+            height: 4px;
             border-radius: 50%;
             z-index: 100;
             animation: explode 1s ease-out forwards;
@@ -111,7 +106,7 @@
 
         @keyframes explode {
             0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(15); opacity: 0; }
+            100% { transform: scale(12); opacity: 0; }
         }
     </style>
 </head>
@@ -145,20 +140,17 @@
     const floatingNo = document.getElementById("floatingNo");
     const card = document.getElementById("card");
 
-    // Background Heart Effect
     function createHeart() {
         const heart = document.createElement("div");
         heart.className = "heart-bg";
         heart.innerHTML = "❤️";
         heart.style.left = Math.random() * 100 + "vw";
         heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-        heart.style.opacity = Math.random();
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 6000);
     }
     setInterval(createHeart, 400);
 
-    // No Button Movement
     function moveNo() {
         const x = Math.random() * (window.innerWidth - 180);
         const y = Math.random() * (window.innerHeight - 60);
@@ -168,43 +160,45 @@
         noIndex++;
     }
 
+    floatingNo.addEventListener("touchstart", (e) => { e.preventDefault(); moveNo(); });
     floatingNo.addEventListener("mouseover", moveNo);
-    floatingNo.addEventListener("click", moveNo);
-    moveNo(); // Initial random position
+    moveNo();
 
-    // Celebration Effect
     function fireworks() {
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i < 35; i++) {
             const f = document.createElement("div");
             f.className = "firework";
             f.style.left = Math.random() * window.innerWidth + "px";
             f.style.top = Math.random() * window.innerHeight + "px";
-            f.style.background = `hsl(${Math.random() * 360}, 100%, 60%)`;
+            f.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
             document.body.appendChild(f);
             setTimeout(() => f.remove(), 1000);
         }
     }
 
-    // Success Action
     document.getElementById("yesBtn").onclick = () => {
         const audio = document.getElementById("bgMusic");
-        audio.play().catch(err => console.log("Audio waiting for interaction"));
+        audio.play().catch(err => console.log("Audio waiting"));
         
         floatingNo.style.display = "none";
         fireworks();
 
         card.innerHTML = `
         <div class="final">
-            <h2>💖 You make my heart smile 💖</h2>
+            <h2 style="text-align:center">💖 You make my heart smile 💖</h2>
             <img src="image.jpg" alt="Our Memory">
-            <div style="text-align: left; font-size: 15px; line-height: 1.6;">
+            <div style="font-size: 15px; line-height: 1.6;">
                 <p><strong>Hi Metti 💗</strong></p>
                 <p>I miss you a lot and I’m really sad that we can’t meet for your birthday or Valentine’s Day 💔 But nothing in this world can change the way I think about you...</p>
+                
                 <p><strong>I see you 👀✨</strong><br>
                 <strong>I choose you 💞</strong><br>
                 Today, tomorrow, always ♾️❤️</p>
-                <p><i>(Your personal letter continues here...)</i></p>
-            </div>
+
+                <p>
+                    ADD YOUR FULL MESSAGE HERE...
+                </p>
+                </div>
         </div>`;
     };
 </script>
