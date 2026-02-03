@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💖</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffd6e8, #ffeaf4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.card {
+  width: 92%;
+  max-width: 360px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.15);
+  position: relative;
+}
+
+h1 {
+  color: #e91e63;
+  margin-bottom: 10px;
+}
+
+#dialog {
+  font-size: 18px;
+  min-height: 60px;
+  margin-bottom: 22px;
+}
+
+.buttons {
+  position: relative;
+  height: 60px;
+}
+
+#yesBtn {
+  background: #ff4f91;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#noText {
+  position: absolute;
+  background: #eee;
+  color: #333;
+  padding: 12px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  display: none;
+}
+
+.final {
+  background: linear-gradient(135deg, #1a237e, #ff77b7);
+  color: white;
+}
+
+.final-content {
+  max-height: 70vh;
+  overflow-y: auto;
+  text-align: left;
+  padding-right: 6px;
+}
+
+.final-content p {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.final img {
+  width: 100%;
+  border-radius: 16px;
+  margin: 16px 0;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+.caption {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1>Fluffyyyy 💖</h1>
+  <div id="dialog">Will you be my Valentine? 💕</div>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes 💗</button>
+    <div id="noText" style="right: 0;">No</div>
+  </div>
+</div>
+
+<canvas id="fireworks"></canvas>
+
+<script>
+const messages = [
+  "Wait… are you sure? 🥺",
+  "Really? 😏",
+  "Try again 😌",
+  "Are you sure mettiii? 🥹",
+  "Haha nice try 😆",
+  "No escape! 😈",
+  "Nice try 😂",
+  "Still no? Really? 🤨",
+  "You’re testing my patience 😤",
+  "Nope. Not happening 😌"
+];
+
+let index = 0;
+const noText = document.getElementById("noText");
+const dialog = document.getElementById("dialog");
+const yesBtn = document.getElementById("yesBtn");
+const card = document.getElementById("card");
+
+noText.onclick = () => {
+  noText.innerText = messages[index];
+  index = (index + 1) % messages.length;
+
+  const x = Math.random() * 120;
+  const y = Math.random() * 30;
+  noText.style.left = x + "px";
+  noText.style.top = y + "px";
+};
+
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+
+yesBtn.onclick = () => {
+  startFireworks();
+};
+
+function startFireworks() {
+  canvas.style.display = "block";
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let particles = [];
+
+  function burst() {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height * 0.5;
+    for (let i = 0; i < 45; i++) {
+      particles.push({
+        x, y,
+        dx: Math.random() * 6 - 3,
+        dy: Math.random() * 6 - 3,
+        life: 60,
+        color: `hsl(${Math.random()*360},100%,70%)`
+      });
+    }
+  }
+
+  const interval = setInterval(burst, 300);
+
+  function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach((p,i) => {
+      p.x += p.dx;
+      p.y += p.dy;
+      p.life--;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,3,0,Math.PI*2);
+      ctx.fill();
+      if (p.life <= 0) particles.splice(i,1);
+    });
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  setTimeout(() => {
+    clearInterval(interval);
+    canvas.style.display = "none";
+    showFinal();
+  }, 3500);
+}
+
+function showFinal() {
+  card.classList.add("final");
+  card.innerHTML = `
+    <div class="caption">You make my heart smile 💗</div>
+
+    <img src="heart.jpg" alt="Heart">
+
+    <div class="final-content">
+      <p>Hi Metti 💗<br>
+      I miss you a lot and I’m really sad that we can’t meet for your birthday or Valentine’s Day 💔 But nothing in this world can change the way I think about you. You make me feel absolutely special and loved every single day just by being with me 🫂✨</p>
+
+      <p>You are my emotional comfort human, my hug human 🤍, cuddles, kisses — everything, my whole life. I want you to have the best life, and I wish to do it together 💞 Together, I feel so secure and happy like I’ve never felt earlier 🥹❤️</p>
+
+      <p>Without a plan, I met you. While getting to know each other, we both were able to see that we can connect 🤍 I don’t want to lose my favourite hooman at any cost 🥺🐾 For me, you are rare — like 1 in 7 billion 🌍💫</p>
+
+      <p>I choose you. 🫶<br>
+      Today, tomorrow, and forever ♾️❤️</p>
+
+      <p>Thanks for being my VALENTINE, fluff ball 💕<br>
+      Ummmmwahhh 😘💋</p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
